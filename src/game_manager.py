@@ -1,7 +1,6 @@
 # Importing Libraries.
 import pygame
 from pygame.locals import *
-import time
 
 # Importing Local Modules.
 from .settings import *
@@ -20,7 +19,7 @@ class GameManager:
 
         # Setting up Screen.
         self.screen = pygame.display.set_mode((self.width, self.height))
-        pygame.display.set_icon(PLAYER_IDLE_RIGHT_IMAGES[0])
+        pygame.display.set_icon(PLAYER_IDLE_IMAGES[0])
 
         # Setting up clock for FPS.
         self.clock = pygame.time.Clock()
@@ -33,7 +32,7 @@ class GameManager:
         '''
         Loads all the variables.
         '''
-        self.player = Player(PLAYER_IDLE_RIGHT_IMAGES[0], PLAYER_STARTING_POS[0], PLAYER_STARTING_POS[1])
+        self.player = Player(PLAYER_IDLE_IMAGES[0], PLAYER_STARTING_POS[0], PLAYER_STARTING_POS[1])
         self.player.mass = PLAYER_MASS # Setting player's mass.
         self.tilemap = Tilemap(map_data=level,
                               tile_size=TILE_SIZE,
@@ -43,13 +42,6 @@ class GameManager:
         '''
         This method will handle all the rendering stuff.
         '''
-
-        if self.player.dx > 0: # Right Run.
-            animate(self.player, PLAYER_RUN_RIGHT_IMAGES, PLAYER_RUN_SPEED)
-        elif self.player.dx < 0: # Left Run.
-            animate(self.player, PLAYER_RUN_LEFT_IMAGES, PLAYER_RUN_SPEED)
-        else: # Idle.
-            animate(self.player, PLAYER_IDLE_RIGHT_IMAGES, PLAYER_IDLE_SPEED)
         
         # Rendering Tiles.
         self.tilemap.draw(self.screen)
@@ -61,28 +53,7 @@ class GameManager:
         '''
         This method will handle all the computing/calculations stuff.
         '''
-
-        # Setting delta x to 0 or else the speed would increase continuously.
-        self.player.dx = 0
-        self.player.rect.y += self.player.dy
-        collisionY, hitY = collision_handler(self.player, self.tilemap.tiles_group, 'Y')
-        # We need to write self.player.dy here because else it will 
-        # basically be 0 everytime and no collisions will be detected.
-        self.player.dy = 0
-        if collisionY['DOWN'] != True:
-            self.player.apply_gravity(GRAVITY)
-
-        keys = key_handler()
-        if keys['LEFT']:
-            self.player.dx += -PLAYER_HORIZONTAL_SPEED
-        if keys['RIGHT']:
-            self.player.dx += PLAYER_HORIZONTAL_SPEED
-        if keys['UP']:
-            if collisionY['DOWN']:
-                pass
-
-        self.player.rect.x += self.player.dx
-        collisionX, hitX = collision_handler(self.player, self.tilemap.tiles_group, 'X')
+        self.player.movement(self.tilemap.tiles_group)
 
     def run(self) -> None:
         '''

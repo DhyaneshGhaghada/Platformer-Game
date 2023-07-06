@@ -12,7 +12,7 @@ FPS = 60
 BACKGROUND_COLOR = (0, 0, 0)
 
 # Universal Gravity.
-GRAVITY = 2
+GRAVITY = 0.8
 
 # Level
 level = [
@@ -22,7 +22,7 @@ level = [
     [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
     [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
     [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
     [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
     [1,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
     [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
@@ -47,13 +47,14 @@ TILE_IMAGES = generate_pygame_image(dir=TILE_DIR,
 
 # PLAYER
 PLAYER_HORIZONTAL_SPEED = 5
+PLAYER_JUMP_FORCE = -16
 PLAYER_MASS = 4
 PLAYER_STARTING_POS = (16*2, 16*2)
-# PLAYER IMAGES.
+# PLAYER ANIMATION IMAGES.
 # Player Idle.
 PLAYER_IDLE_DIR = "vfx/player/idle"
 PLAYER_IDLE_SPEED = 0.1
-PLAYER_IDLE_RIGHT_IMAGES = generate_pygame_image(dir=PLAYER_IDLE_DIR,
+PLAYER_IDLE_IMAGES = generate_pygame_image(dir=PLAYER_IDLE_DIR,
                                                 resize=(16*2,16*2),
                                                 is_reverse=False)
 
@@ -66,5 +67,16 @@ PLAYER_RUN_RIGHT_IMAGES = generate_pygame_image(dir=PLAYER_RUN_DIR,
                                                 is_reverse=False)
 # LEFT
 PLAYER_RUN_LEFT_IMAGES = generate_pygame_image(dir=PLAYER_RUN_DIR,
+                                                resize=(16*2,16*2),
+                                                is_reverse=True)
+
+# JUMP
+PLAYER_JUMP_DIR = "vfx/player/jump"
+PLAYER_JUMP_SPEED = 0.1
+PLAYER_JUMP_RIGHT_IMAGES = generate_pygame_image(dir=PLAYER_JUMP_DIR,
+                                                resize=(16*2,16*2),
+                                                is_reverse=False)
+# LEFT
+PLAYER_JUMP_LEFT_IMAGES = generate_pygame_image(dir=PLAYER_JUMP_DIR,
                                                 resize=(16*2,16*2),
                                                 is_reverse=True)
