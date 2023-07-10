@@ -1,3 +1,5 @@
+import pygame
+
 from .functions import generate_pygame_image
 
 
@@ -37,6 +39,14 @@ level = [
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 ]
 
+# Gun Images.
+SIMPLE_GUN_SIZE = (16*1.8, 10*1.8)
+SIMPLE_GUN_IMAGE = pygame.transform.scale(pygame.image.load('vfx/weapons/simple_gun.png'), SIMPLE_GUN_SIZE)
+SIMPLE_GUN_BULLET_SIZE = (16*1, 10*1)
+SIMPLE_GUN_BULLET_IMAGE = pygame.transform.scale(pygame.image.load('vfx/weapons/simple_gun_bullet.png'), SIMPLE_GUN_BULLET_SIZE)
+SIMPLE_GUN_BULLET_DAMAGE = 0
+SIMPLE_GUN_BULLET_SPEED = 15
+SIMPLE_GUN_MAX_BULLET_SHOOT = 1
 
 # TILE IMAGES.
 TILE_DIR = 'vfx/tiles'

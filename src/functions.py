@@ -1,5 +1,7 @@
 import pygame
+import math
 import os
+from typing import Tuple
 
 def generate_pygame_image(dir: str, resize: tuple[int, int], is_reverse: bool) -> list[pygame.Surface]:
     '''
@@ -78,3 +80,19 @@ def collision_handler(obj, tiles, direction) -> dict:
                     collision_dict['UP'] = True
 
     return collision_dict
+
+def compute_angle(point_a, point_b) -> float:
+    radian_value = math.atan2(point_b[1] - point_a[1], point_b[0] - point_a[0])
+    degrees_value = (-radian_value)*(180/math.pi)
+    return degrees_value
+
+def rotate(surface, angle: float, coords: Tuple[float, float]) -> Tuple[pygame.Surface, pygame.Rect]:
+    rotated_surface = pygame.transform.rotozoom(surface, angle, 1)
+    rotated_rect = rotated_surface.get_rect(center=coords)
+    return (rotated_surface, rotated_rect)
+
+def normalize(x: float, y: float) -> Tuple[float, float]:
+    pythagorean_theorem = math.sqrt((x**2) + (y**2))
+    x = x/pythagorean_theorem
+    y = y/pythagorean_theorem
+    return (x, y)

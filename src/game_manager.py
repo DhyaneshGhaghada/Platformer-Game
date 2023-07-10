@@ -7,6 +7,7 @@ from .settings import *
 from .player import Player
 from .functions import animate, key_handler, collision_handler
 from .tilemap import Tilemap
+from .gun import Simple_Gun
 
 # Initialising Pygame.
 pygame.init()
@@ -37,6 +38,7 @@ class GameManager:
         self.tilemap = Tilemap(map_data=level,
                               tile_size=TILE_SIZE,
                               tiles=TILE_IMAGES)
+        self.gun = Simple_Gun(self.player)
 
     def rendering(self) -> None:
         '''
@@ -49,11 +51,16 @@ class GameManager:
         # Rendering Player.
         self.player.draw(self.screen)
 
+        # Rendering Gun.
+        self.gun.draw(self.screen)
+
     def computing(self) -> None:
         '''
         This method will handle all the computing/calculations stuff.
         '''
         self.player.movement(self.tilemap.tiles_group)
+        self.gun.rotate_gun_on_mouse_pos()
+        self.gun.update_bullet_status()
 
     def run(self) -> None:
         '''
