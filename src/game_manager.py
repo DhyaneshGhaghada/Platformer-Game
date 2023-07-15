@@ -5,7 +5,6 @@ from pygame.locals import *
 # Importing Local Modules.
 from .settings import *
 from .player import Player
-from .functions import animate, key_handler, collision_handler
 from .tilemap import Tilemap
 from .gun import Simple_Gun
 
@@ -31,14 +30,20 @@ class GameManager:
 
     def load(self) -> None:
         '''
-        Loads all the variables.
+        Loads all the variables/objects.
         '''
+        
         self.player = Player(PLAYER_IDLE_IMAGES[0], PLAYER_STARTING_POS[0], PLAYER_STARTING_POS[1])
         self.player.mass = PLAYER_MASS # Setting player's mass.
+
         self.tilemap = Tilemap(map_data=level,
                               tile_size=TILE_SIZE,
                               tiles=TILE_IMAGES)
-        self.gun = Simple_Gun(self.player)
+
+        self.gun = Simple_Gun(self.player, SIMPLE_GUN_IMAGE, SIMPLE_GUN_BULLET_IMAGE)
+        self.gun.bullet_damage = SIMPLE_GUN_BULLET_DAMAGE
+        self.gun.bullet_speed = SIMPLE_GUN_BULLET_SPEED
+        self.gun.max_bullet_shoot = SIMPLE_GUN_MAX_BULLET_SHOOT
 
     def rendering(self) -> None:
         '''
@@ -60,7 +65,7 @@ class GameManager:
         '''
         self.player.movement(self.tilemap.tiles_group)
         self.gun.rotate_gun_on_mouse_pos()
-        self.gun.update_bullet_status()
+        self.gun.update_bullet_status(self.tilemap.tiles_group)
 
     def run(self) -> None:
         '''

@@ -1,23 +1,27 @@
-from typing import Any
 import pygame
+import math
 
-from .settings import SIMPLE_GUN_BULLET_IMAGE, SIMPLE_GUN_IMAGE, SIMPLE_GUN_BULLET_DAMAGE, SIMPLE_GUN_BULLET_SPEED, SIMPLE_GUN_MAX_BULLET_SHOOT
-from .functions import compute_angle, rotate, normalize
+from .functions import compute_angle, rotate
 from .bullet import Bullet
 
 class Simple_Gun(pygame.sprite.Sprite):
-    def __init__(self, player) -> None:
+    '''
+    Simple Gun which shoots bullets.
+    Make Sure to fill these attr manually, 
+    ' self.bullet_damage, self.bullet_speed, self.max_bullet '
+    '''
+    def __init__(self, player, gun_img: pygame.Surface, bullet_img: pygame.Surface) -> None:
         pygame.sprite.Sprite.__init__(self)
         self.player = player
-        self.image = SIMPLE_GUN_IMAGE
+        self.image = gun_img
         self.rect = self.image.get_rect()
         self.angle = 0
 
         # Bullet Variables.
+        self.bullet_img = bullet_img
         self.bullet_group = pygame.sprite.Group()
-        self.bullet_damage = SIMPLE_GUN_BULLET_DAMAGE
-        self.bullet_speed = SIMPLE_GUN_BULLET_SPEED
-        self.max_bullet_shoot = SIMPLE_GUN_MAX_BULLET_SHOOT
+        self.bullet_damage = 0
+        self.bullet_speed = 0
 
     def rotate_gun_on_mouse_pos(self) -> None:
         mx, my = pygame.mouse.get_pos()
@@ -31,26 +35,36 @@ class Simple_Gun(pygame.sprite.Sprite):
             self.rotated_image, self.rotated_rect = rotate(self.image, self.angle, (x, y))
 
     def create_bullet(self) -> None:
-        if len(self.bullet_group) <= self.max_bullet_shoot:
-            bullet = Bullet(SIMPLE_GUN_BULLET_IMAGE)
-            bullet.damage = self.bullet_damage
-            bullet.speed = self.bullet_speed
-            self.bullet_group.add(bullet)
+        bullet = Bullet(self.bullet_img)
+        
+        bullet.damage = self.bullet_damage
+        bullet.speed = self.bullet_speed
+        
+        bullet.rect.x = self.rotated_rect.x
+        bullet.rect.y = self.rotated_rect.y
+
+        # Computing Bullet's dx, dy.
+        mx, my = pygame.mouse.get_pos()        
+        angle = compute_angle((mx, my), (bullet.rect.x, bullet.rect.y))
+        x = math.cos(angle*(math.pi/180))*(180/math.pi)
+        y = math.sin(angle*(math.pi/180))*(180/math.pi)
+        bullet.x_vel = -x # IDK why putting '-' sign works here perfectly!
+        bullet.y_vel = y
+
+        self.bullet_group.add(bullet)
         
     def shoot_bullet(self) -> None:
         for bullet in self.bullet_group:
-            if pygame.mouse.get_pressed()[0]:
-                mx, my = pygame.mouse.get_pos()
-                x, y = normalize( mx - self.rect.x, my - self.rect.y )
-                bullet.move(x, y)
+            bullet.move(self.bullet_speed)
     
-    def destroy_bullet(self) -> None:
-        pass
+    def destroy_bullet(self, tile_group: pygame.sprite.Group) -> None:
+        hits = pygame.sprite.groupcollide(self.bullet_group, tile_group, True, False)
 
-    def update_bullet_status(self) -> None:
-        self.create_bullet()
+    def update_bullet_status(self, tile_group: pygame.sprite.Group) -> None:
+        if pygame.mouse.get_pressed()[0] and len(self.bullet_group) == 0:
+            self.create_bullet()
         self.shoot_bullet()
-        self.destroy_bullet()
+        self.destroy_bullet(tile_group)
 
     def draw(self, screen: pygame.Surface) -> None:
         self.bullet_group.draw(screen)

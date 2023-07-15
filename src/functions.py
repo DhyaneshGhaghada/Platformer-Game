@@ -44,7 +44,7 @@ def key_handler() -> dict:
     
     return keys_dict
 
-def collision_handler(obj, tiles, direction) -> dict:
+def collision_handler(obj, tiles: pygame.sprite.Group, direction: str) -> dict:
     '''
     Handles Collisions between a sprite and a group of sprites.
     '''
@@ -81,7 +81,7 @@ def collision_handler(obj, tiles, direction) -> dict:
 
     return collision_dict
 
-def compute_angle(point_a, point_b) -> float:
+def compute_angle(point_a: Tuple[float, float], point_b: Tuple[float, float]) -> float:
     radian_value = math.atan2(point_b[1] - point_a[1], point_b[0] - point_a[0])
     degrees_value = (-radian_value)*(180/math.pi)
     return degrees_value

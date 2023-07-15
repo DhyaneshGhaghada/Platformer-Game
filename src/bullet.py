@@ -1,6 +1,5 @@
 import pygame
 
-
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, image: pygame.Surface) -> None:
         pygame.sprite.Sprite.__init__(self)
@@ -9,6 +8,11 @@ class Bullet(pygame.sprite.Sprite):
         self.damage = 0 # The damage Applied on the enemy.
         self.speed = 0 # the speed of the bullet.
 
-    def move(self, x, y) -> None:
-        self.rect.x += x*self.speed
-        self.rect.y += y*self.speed
+        # Since we want to find coordinates only once when we create bullet.
+        # We will keep that speed here and then add it in move move function to the bullet's rect.
+        self.x_vel = 0
+        self.y_vel = 0
+
+    def move(self, bullet_speed: float) -> None:
+        self.rect.x += self.x_vel*bullet_speed
+        self.rect.y += self.y_vel*bullet_speed
