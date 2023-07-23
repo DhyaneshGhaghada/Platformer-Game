@@ -44,6 +44,7 @@ class GameManager:
         self.gun.bullet_damage = SIMPLE_GUN_BULLET_DAMAGE
         self.gun.bullet_speed = SIMPLE_GUN_BULLET_SPEED
         self.gun.max_bullet_shoot = SIMPLE_GUN_MAX_BULLET_SHOOT
+        self.gun.create_particles(SIMPLE_GUN_PARTICLE_IMAGE, SIMPLE_GUN_PARTICLE_UPFORCE, SIMPLE_GUN_PARTICLE_GRAVITY, SIMPLE_GUN_PARTICLE_TIMERSPEED)
 
     def rendering(self) -> None:
         '''

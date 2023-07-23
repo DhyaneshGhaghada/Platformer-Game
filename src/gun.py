@@ -3,6 +3,7 @@ import math
 
 from .functions import compute_angle, rotate
 from .bullet import Bullet
+from .particle_system import Partical_System
 
 class Simple_Gun(pygame.sprite.Sprite):
     '''
@@ -22,6 +23,17 @@ class Simple_Gun(pygame.sprite.Sprite):
         self.bullet_group = pygame.sprite.Group()
         self.bullet_damage = 0
         self.bullet_speed = 0
+
+
+        self.is_particle = False
+    
+    def create_particles(self, particle_img: pygame.Surface, up_force: float, gravity: float, timer_speed: float) -> None:
+        self.is_particle = True
+        # Partical System.
+        self.particle_system = Partical_System(particle_img)
+        self.particle_system.up_force = up_force
+        self.particle_system.gravity = gravity
+        self.particle_system.timer_speed = timer_speed
 
     def rotate_gun_on_mouse_pos(self) -> None:
         mx, my = pygame.mouse.get_pos()
@@ -59,6 +71,9 @@ class Simple_Gun(pygame.sprite.Sprite):
     
     def destroy_bullet(self, tile_group: pygame.sprite.Group) -> None:
         hits = pygame.sprite.groupcollide(self.bullet_group, tile_group, True, False)
+        if hits:
+            for bullet, tile in hits.items():
+                self.particle_system.create_particles(bullet.rect.x, bullet.rect.y)
 
     def update_bullet_status(self, tile_group: pygame.sprite.Group) -> None:
         if pygame.mouse.get_pressed()[0] and len(self.bullet_group) == 0:
@@ -69,3 +84,4 @@ class Simple_Gun(pygame.sprite.Sprite):
     def draw(self, screen: pygame.Surface) -> None:
         self.bullet_group.draw(screen)
         screen.blit(self.rotated_image, self.rotated_rect)
+        self.particle_system.update_particles(screen)
