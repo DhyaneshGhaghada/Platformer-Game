@@ -7,9 +7,12 @@ from .settings import *
 from .player import Player
 from .tilemap import Tilemap
 from .gun import Simple_Gun
+from .functions import change_cursor_img
+from .background import Background
 
 # Initialising Pygame.
 pygame.init()
+
 
 class GameManager:
     def __init__(self):
@@ -25,6 +28,8 @@ class GameManager:
         self.clock = pygame.time.Clock()
         self.dt = 0
 
+        pygame.mouse.set_visible(False)
+
         # Loading all the variables.
         self.load()
 
@@ -33,6 +38,8 @@ class GameManager:
         Loads all the variables/objects.
         '''
         
+        self.background = Background(BACKGROUND_PARTICLE_IMAGE)
+
         self.player = Player(PLAYER_IDLE_IMAGES[0], PLAYER_STARTING_POS[0], PLAYER_STARTING_POS[1])
         self.player.mass = PLAYER_MASS # Setting player's mass.
 
@@ -43,13 +50,17 @@ class GameManager:
         self.gun = Simple_Gun(self.player, SIMPLE_GUN_IMAGE, SIMPLE_GUN_BULLET_IMAGE)
         self.gun.bullet_damage = SIMPLE_GUN_BULLET_DAMAGE
         self.gun.bullet_speed = SIMPLE_GUN_BULLET_SPEED
+        self.gun.bullet_timer = SIMPLE_GUN_BULLET_TIMER
         self.gun.max_bullet_shoot = SIMPLE_GUN_MAX_BULLET_SHOOT
-        self.gun.create_particles(SIMPLE_GUN_PARTICLE_IMAGE, SIMPLE_GUN_PARTICLE_UPFORCE, SIMPLE_GUN_PARTICLE_GRAVITY, SIMPLE_GUN_PARTICLE_TIMERSPEED)
+        self.gun.create_particles(SIMPLE_GUN_PARTICLE_IMAGE, SIMPLE_GUN_PARTICLE_UPFORCE, SIMPLE_GUN_PARTICLE_GRAVITY, SIMPLE_GUN_PARTICLE_TIMERSPEED, SIMPLE_GUN_PARTICLE_MAX)
 
     def rendering(self) -> None:
         '''
         This method will handle all the rendering stuff.
         '''
+
+        # Rendering Background.
+        self.background.update_particles(self.screen)
         
         # Rendering Tiles.
         self.tilemap.draw(self.screen)
@@ -59,6 +70,9 @@ class GameManager:
 
         # Rendering Gun.
         self.gun.draw(self.screen)
+
+        # Rendering Cursor.
+        change_cursor_img(self.screen, CURSOR_IMG)
 
     def computing(self) -> None:
         '''

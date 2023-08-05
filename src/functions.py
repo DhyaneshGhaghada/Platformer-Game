@@ -96,3 +96,7 @@ def normalize(x: float, y: float) -> Tuple[float, float]:
     x = x/pythagorean_theorem
     y = y/pythagorean_theorem
     return (x, y)
+
+def change_cursor_img(screen: pygame.Surface, img: pygame.Surface) -> None:
+    mx, my = pygame.mouse.get_pos()
+    screen.blit(img, (mx - (img.get_rect().width/2), my - (img.get_rect().height/2)))

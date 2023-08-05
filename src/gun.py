@@ -1,5 +1,6 @@
 import pygame
 import math
+import random
 
 from .functions import compute_angle, rotate
 from .bullet import Bullet
@@ -23,17 +24,20 @@ class Simple_Gun(pygame.sprite.Sprite):
         self.bullet_group = pygame.sprite.Group()
         self.bullet_damage = 0
         self.bullet_speed = 0
+        self.BULLET_TIMER = 0 # The original value.
+        self.bullet_timer_copy = 0 # The Value that gets changed.
 
 
         self.is_particle = False
     
-    def create_particles(self, particle_img: pygame.Surface, up_force: float, gravity: float, timer_speed: float) -> None:
+    def create_particles(self, particle_img: pygame.Surface, up_force: float, gravity: float, timer_speed: float, max_particles: int) -> None:
         self.is_particle = True
         # Partical System.
         self.particle_system = Partical_System(particle_img)
-        self.particle_system.up_force = up_force
-        self.particle_system.gravity = gravity
-        self.particle_system.timer_speed = timer_speed
+        self.particle_system_up_force = up_force
+        self.particle_system_gravity = gravity
+        self.particle_system_timer_speed = timer_speed
+        self.particle_system_max_particles = max_particles
 
     def rotate_gun_on_mouse_pos(self) -> None:
         mx, my = pygame.mouse.get_pos()
@@ -47,6 +51,7 @@ class Simple_Gun(pygame.sprite.Sprite):
             self.rotated_image, self.rotated_rect = rotate(self.image, self.angle, (x, y))
 
     def create_bullet(self) -> None:
+        self.bullet_timer_copy = self.bullet_timer
         bullet = Bullet(self.bullet_img)
         
         bullet.damage = self.bullet_damage
@@ -60,7 +65,7 @@ class Simple_Gun(pygame.sprite.Sprite):
         angle = compute_angle((mx, my), (bullet.rect.x, bullet.rect.y))
         x = math.cos(angle*(math.pi/180))*(180/math.pi)
         y = math.sin(angle*(math.pi/180))*(180/math.pi)
-        bullet.x_vel = -x # IDK why putting '-' sign works here perfectly!
+        bullet.x_vel = -x # IDK why putting '-' sign works here!
         bullet.y_vel = y
 
         self.bullet_group.add(bullet)
@@ -68,15 +73,18 @@ class Simple_Gun(pygame.sprite.Sprite):
     def shoot_bullet(self) -> None:
         for bullet in self.bullet_group:
             bullet.move(self.bullet_speed)
+        self.bullet_timer_copy -= 0.1
     
     def destroy_bullet(self, tile_group: pygame.sprite.Group) -> None:
         hits = pygame.sprite.groupcollide(self.bullet_group, tile_group, True, False)
         if hits:
             for bullet, tile in hits.items():
-                self.particle_system.create_particles(bullet.rect.x, bullet.rect.y)
+                for _ in range(self.particle_system_max_particles):
+                    self.particle_system.create_particles(bullet.rect.x, bullet.rect.y, round(random.uniform(-1,1), 2)*10, self.particle_system_up_force, random.randint(1, 10), self.particle_system_gravity, self.particle_system_timer_speed)
 
     def update_bullet_status(self, tile_group: pygame.sprite.Group) -> None:
-        if pygame.mouse.get_pressed()[0] and len(self.bullet_group) == 0:
+        if pygame.mouse.get_pressed()[0] and self.bullet_timer_copy <= 0:
+            self.bullet_timer_copy = self.BULLET_TIMER
             self.create_bullet()
         self.shoot_bullet()
         self.destroy_bullet(tile_group)
