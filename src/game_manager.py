@@ -78,7 +78,7 @@ class GameManager:
         '''
         This method will handle all the computing/calculations stuff.
         '''
-        self.player.movement(self.tilemap.tiles_group)
+        self.player.update(self.tilemap.tiles_group, self.tilemap.spikes_group)
         self.gun.rotate_gun_on_mouse_pos()
         self.gun.update_bullet_status(self.tilemap.tiles_group)
 

@@ -77,6 +77,7 @@ PLAYER_HORIZONTAL_SPEED = 5
 PLAYER_JUMP_FORCE = -20
 PLAYER_MASS = 4
 PLAYER_STARTING_POS = (16*2, 16*2)
+PLAYER_HEALTH = 10
 # PLAYER ANIMATION IMAGES.
 # Player Idle.
 PLAYER_IDLE_DIR = "vfx/player/idle"
@@ -107,3 +108,19 @@ PLAYER_JUMP_RIGHT_IMAGES = generate_pygame_image(dir=PLAYER_JUMP_DIR,
 PLAYER_JUMP_LEFT_IMAGES = generate_pygame_image(dir=PLAYER_JUMP_DIR,
                                                 resize=(16*2,16*2),
                                                 is_reverse=True)
+
+# DAMAGE
+PLAYER_DAMAGE_IMAGE = generate_pygame_image(dir='vfx/player/damage',
+                                            resize=(16*2, 16*2),
+                                            is_reverse=False)
+PLAYER_DAMAGE_TIME = 0.1
+
+# Die
+PLAYER_DIE_1_IMAGE = generate_pygame_image(dir='vfx/player/die_1',
+                                            resize=(16*2, 16*2),
+                                            is_reverse=False)
+PLAYER_DIE_1_TIME = 0.05
+PLAYER_DIE_2_IMAGE = generate_pygame_image(dir='vfx/player/die_2',
+                                            resize=(16*2, 16*2),
+                                            is_reverse=False)
+PLAYER_DIE_2_TIME = 0.05
