@@ -30,7 +30,11 @@ class Simple_Gun(pygame.sprite.Sprite):
 
         self.is_particle = False
     
-    def create_particles(self, particle_img: pygame.Surface, up_force: float, gravity: float, timer_speed: float, max_particles: int) -> None:
+    def create_particles(self, particle_img: pygame.Surface,
+                         up_force: float, gravity: float,
+                         timer_speed: float,
+                         max_particles: int) -> None:
+        
         self.is_particle = True
         # Partical System.
         self.particle_system = Partical_System(particle_img)

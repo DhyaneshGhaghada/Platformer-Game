@@ -13,7 +13,6 @@ from .background import Background
 # Initialising Pygame.
 pygame.init()
 
-
 class GameManager:
     def __init__(self):
         # width and height for the screen.
@@ -22,7 +21,7 @@ class GameManager:
 
         # Setting up Screen.
         self.screen = pygame.display.set_mode((self.width, self.height))
-        pygame.display.set_icon(PLAYER_IDLE_IMAGES[0])
+        pygame.display.set_icon(PLAYER_ANIMATION['idle'][0][0])
 
         # Setting up clock for FPS.
         self.clock = pygame.time.Clock()
@@ -40,7 +39,7 @@ class GameManager:
         
         self.background = Background(BACKGROUND_PARTICLE_IMAGE)
 
-        self.player = Player(PLAYER_IDLE_IMAGES[0], PLAYER_STARTING_POS[0], PLAYER_STARTING_POS[1])
+        self.player = Player(PLAYER_ANIMATION['idle'][0][0], PLAYER_STARTING_POS[0], PLAYER_STARTING_POS[1])
         self.player.mass = PLAYER_MASS # Setting player's mass.
 
         self.tilemap = Tilemap(map_data=level,

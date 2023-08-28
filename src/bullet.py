@@ -6,7 +6,6 @@ class Bullet(pygame.sprite.Sprite):
         self.image = image
         self.rect = self.image.get_rect()
         self.damage = 0 # The damage Applied on the enemy.
-        self.speed = 0 # the speed of the bullet.
 
         # Since we want to find coordinates only once when we create bullet.
         # We will keep that speed here and then add it in move move function to the bullet's rect.

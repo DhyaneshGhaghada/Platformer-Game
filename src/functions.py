@@ -3,7 +3,7 @@ import math
 import os
 from typing import Tuple
 
-def generate_pygame_image(dir: str, resize: tuple[int, int], is_reverse: bool) -> list[pygame.Surface]:
+def generate_pygame_image(dir: str, resize: tuple[int, int], is_reverse: tuple[bool, bool]) -> list[pygame.Surface]:
     '''
     This function generates pygame images based on the dir provided.
     '''
@@ -12,7 +12,7 @@ def generate_pygame_image(dir: str, resize: tuple[int, int], is_reverse: bool) -
     for image_path in image_files:
         image = pygame.image.load(dir+'/'+image_path)
         image = pygame.transform.scale(image, resize)
-        image = pygame.transform.flip(image, is_reverse, False)
+        image = pygame.transform.flip(image, is_reverse[0], is_reverse[1])
         image_list.append(image)
     return image_list
 
@@ -49,7 +49,6 @@ def collision_handler(obj, tiles: pygame.sprite.Group, direction: str) -> dict:
     Handles Collisions between a sprite and a group of sprites.
     '''
 
-    # is_collision = pygame.sprite.spritecollide(obj, tiles, False)
     if direction == 'X':
         collision_dict = {
             'RIGHT' : False,

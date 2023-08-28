@@ -18,23 +18,23 @@ GRAVITY = 0.8
 
 # Level
 level = [
-    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1],
+    [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+    [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+    [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+    [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+    [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+    [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+    [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+    [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+    [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+    [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+    [3,0,0,0,0,0,0,0,0,0,0,0,5,5,0,0,0,0,0,0,0,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+    [3,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,2],
+    [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+    [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+    [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+    [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 ]
 
@@ -43,6 +43,7 @@ CURSOR_IMG = pygame.transform.scale(pygame.image.load('vfx/libresprite_files/cur
 
 # Background.
 BACKGROUND_PARTICLE_IMAGE = pygame.transform.scale(pygame.image.load('vfx/particles/background_particle.png'), (16*0.3, 16*0.3))  
+BACKGROUND_MOON_IMAGE = pygame.transform.scale(pygame.image.load('vfx/libresprite_files/background_moon.png'), (16*4, 16*4))
 
 # Gun Images.
 SIMPLE_GUN_SIZE = (16*1.8, 10*1.8)
@@ -52,7 +53,7 @@ SIMPLE_GUN_BULLET_IMAGE = pygame.transform.scale(pygame.image.load('vfx/weapons/
 SIMPLE_GUN_BULLET_DAMAGE = 0
 SIMPLE_GUN_BULLET_SPEED = 0.5
 SIMPLE_GUN_MAX_BULLET_SHOOT = 1
-SIMPLE_GUN_BULLET_TIMER = 2
+SIMPLE_GUN_BULLET_TIMER = 0.5
 
 SIMPLE_GUN_PARTICLE_SIZE = 4
 SIMPLE_GUN_PARTICLE_IMAGE = pygame.transform.scale(pygame.image.load('vfx/particles/particle1.png'), (SIMPLE_GUN_PARTICLE_SIZE, SIMPLE_GUN_PARTICLE_SIZE))
@@ -69,7 +70,7 @@ TILE_DIR = 'vfx/tiles'
 TILE_SIZE = 16*2
 TILE_IMAGES = generate_pygame_image(dir=TILE_DIR,
                                     resize=(TILE_SIZE, TILE_SIZE),
-                                    is_reverse=False)
+                                    is_reverse=(False, False))
 TILE_IMAGES.append(SPIKE_IMAGE)
 
 # PLAYER
@@ -78,49 +79,24 @@ PLAYER_JUMP_FORCE = -20
 PLAYER_MASS = 4
 PLAYER_STARTING_POS = (16*2, 16*2)
 PLAYER_HEALTH = 10
-# PLAYER ANIMATION IMAGES.
-# Player Idle.
-PLAYER_IDLE_DIR = "vfx/player/idle"
-PLAYER_IDLE_SPEED = 0.1
-PLAYER_IDLE_IMAGES = generate_pygame_image(dir=PLAYER_IDLE_DIR,
-                                                resize=(16*2,16*2),
-                                                is_reverse=False)
+PLAYER_DAMAGE = 1
+PLAYER_DAMAGE_PARTICLE_IMAGE = pygame.transform.scale(pygame.image.load('vfx/particles/damage_particle.png'), (16*0.5, 16*0.5))
 
-# Player Run.
-# RIGHT
-PLAYER_RUN_DIR = "vfx/player/run"
-PLAYER_RUN_SPEED = 0.3
-PLAYER_RUN_RIGHT_IMAGES = generate_pygame_image(dir=PLAYER_RUN_DIR,
-                                                resize=(16*2,16*2),
-                                                is_reverse=False)
-# LEFT
-PLAYER_RUN_LEFT_IMAGES = generate_pygame_image(dir=PLAYER_RUN_DIR,
-                                                resize=(16*2,16*2),
-                                                is_reverse=True)
+# PLAYER ANIMATION.
+PLAYER_ANIMATION = {
+    'idle': [generate_pygame_image(dir='vfx/player/idle', resize=(16*2, 16*2), is_reverse=(False, False)), 0.1],
+    'run_right': [generate_pygame_image(dir='vfx/player/run', resize=(16*2, 16*2), is_reverse=(False, False)), 0.3],
+    'run_left': [generate_pygame_image(dir='vfx/player/run', resize=(16*2, 16*2), is_reverse=(True, False)), 0.3],
+    'jump_right': [generate_pygame_image(dir='vfx/player/jump', resize=(16*2, 16*2), is_reverse=(False, False)), 0.1],
+    'jump_left': [generate_pygame_image(dir='vfx/player/jump', resize=(16*2, 16*2), is_reverse=(True, False)), 0.1],
+    'damage': [generate_pygame_image(dir='vfx/player/damage', resize=(16*2, 16*2), is_reverse=(False, False)), 0.1],
+    'die_1': [generate_pygame_image(dir='vfx/player/die_1', resize=(16*2, 16*2), is_reverse=(False, False)), 0.1],
+    'die_2': [generate_pygame_image(dir='vfx/player/die_2', resize=(16*2, 16*2), is_reverse=(False, False)), 0.05],
+}
 
-# JUMP
-PLAYER_JUMP_DIR = "vfx/player/jump"
-PLAYER_JUMP_SPEED = 0.1
-PLAYER_JUMP_RIGHT_IMAGES = generate_pygame_image(dir=PLAYER_JUMP_DIR,
-                                                resize=(16*2,16*2),
-                                                is_reverse=False)
-# LEFT
-PLAYER_JUMP_LEFT_IMAGES = generate_pygame_image(dir=PLAYER_JUMP_DIR,
-                                                resize=(16*2,16*2),
-                                                is_reverse=True)
-
-# DAMAGE
-PLAYER_DAMAGE_IMAGE = generate_pygame_image(dir='vfx/player/damage',
-                                            resize=(16*2, 16*2),
-                                            is_reverse=False)
-PLAYER_DAMAGE_TIME = 0.1
-
-# Die
-PLAYER_DIE_1_IMAGE = generate_pygame_image(dir='vfx/player/die_1',
-                                            resize=(16*2, 16*2),
-                                            is_reverse=False)
-PLAYER_DIE_1_TIME = 0.05
-PLAYER_DIE_2_IMAGE = generate_pygame_image(dir='vfx/player/die_2',
-                                            resize=(16*2, 16*2),
-                                            is_reverse=False)
-PLAYER_DIE_2_TIME = 0.05
+# FLYING ENEMY.
+# FLYING ENEMY ANIMATION.
+FLYING_ENEMY_ANIMATION = {
+    'basic': [generate_pygame_image(dir='vfx/enemies/flying_enemy/basic', resize=(8*2, 16*2), is_reverse=(False, False)), 0.1],
+    'damage': [generate_pygame_image(dir='vfx/enemies/flying_enemy/damage', resize=(8*2, 16*2), is_reverse=(False, False)), 0.1]
+}

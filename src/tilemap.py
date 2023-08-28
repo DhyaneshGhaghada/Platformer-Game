@@ -1,5 +1,4 @@
 import pygame
-from pygame.sprite import AbstractGroup
 
 class Tile(pygame.sprite.Sprite):
     def __init__(self, image: pygame.Surface) -> None:
@@ -35,7 +34,22 @@ class Tilemap:
                     tile.rect.y = i*tile_size
                     self.tiles_group.add(tile)
                 if map_data[i][j] == 2:
-                    tile = Spike(tiles[1])
+                    tile = Tile(tiles[1])
+                    tile.rect.x = j*tile_size
+                    tile.rect.y = i*tile_size
+                    self.tiles_group.add(tile)
+                if map_data[i][j] == 3:
+                    tile = Tile(tiles[2])
+                    tile.rect.x = j*tile_size
+                    tile.rect.y = i*tile_size
+                    self.tiles_group.add(tile)
+                if map_data[i][j] == 4:
+                    tile = Tile(tiles[3])
+                    tile.rect.x = j*tile_size
+                    tile.rect.y = i*tile_size
+                    self.tiles_group.add(tile)
+                if map_data[i][j] == 5:
+                    tile = Spike(tiles[4])
                     tile.rect.x = j*tile_size
                     tile.rect.y = i*tile_size+(tile_size-10) # Since tiles of size 32 are to be subtracted with spikes height to get properly aligned.
                     self.spikes_group.add(tile)
