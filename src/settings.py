@@ -97,6 +97,6 @@ PLAYER_ANIMATION = {
 # FLYING ENEMY.
 # FLYING ENEMY ANIMATION.
 FLYING_ENEMY_ANIMATION = {
-    'basic': [generate_pygame_image(dir='vfx/enemies/flying_enemy/basic', resize=(8*2, 16*2), is_reverse=(False, False)), 0.1],
-    'damage': [generate_pygame_image(dir='vfx/enemies/flying_enemy/damage', resize=(8*2, 16*2), is_reverse=(False, False)), 0.1]
+    'idle_right': [generate_pygame_image(dir='vfx/enemies/flying_enemy/idle', resize=(16*2, 16*2), is_reverse=(False, False)), 0.1],
+    'idle_left': [generate_pygame_image(dir='vfx/enemies/flying_enemy/idle', resize=(16*2, 16*2), is_reverse=(True, False)), 0.1],
 }

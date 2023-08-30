@@ -6,9 +6,9 @@ from pygame.locals import *
 from .settings import *
 from .player import Player
 from .tilemap import Tilemap
-from .gun import Simple_Gun
 from .functions import change_cursor_img
 from .background import Background
+from .enemies import FlyingEnemySystem
 
 # Initialising Pygame.
 pygame.init()
@@ -40,18 +40,13 @@ class GameManager:
         self.background = Background(BACKGROUND_PARTICLE_IMAGE)
 
         self.player = Player(PLAYER_ANIMATION['idle'][0][0], PLAYER_STARTING_POS[0], PLAYER_STARTING_POS[1])
-        self.player.mass = PLAYER_MASS # Setting player's mass.
 
         self.tilemap = Tilemap(map_data=level,
                               tile_size=TILE_SIZE,
                               tiles=TILE_IMAGES)
 
-        self.gun = Simple_Gun(self.player, SIMPLE_GUN_IMAGE, SIMPLE_GUN_BULLET_IMAGE)
-        self.gun.bullet_damage = SIMPLE_GUN_BULLET_DAMAGE
-        self.gun.bullet_speed = SIMPLE_GUN_BULLET_SPEED
-        self.gun.bullet_timer = SIMPLE_GUN_BULLET_TIMER
-        self.gun.max_bullet_shoot = SIMPLE_GUN_MAX_BULLET_SHOOT
-        self.gun.create_particles(SIMPLE_GUN_PARTICLE_IMAGE, SIMPLE_GUN_PARTICLE_UPFORCE, SIMPLE_GUN_PARTICLE_GRAVITY, SIMPLE_GUN_PARTICLE_TIMERSPEED, SIMPLE_GUN_PARTICLE_MAX)
+        self.flying_enemy = FlyingEnemySystem(self.player, self.tilemap.tiles_group)
+
 
     def rendering(self) -> None:
         '''
@@ -67,8 +62,8 @@ class GameManager:
         # Rendering Player.
         self.player.draw(self.screen)
 
-        # Rendering Gun.
-        self.gun.draw(self.screen)
+        # Rendering and Updating Flying Enemies.
+        self.flying_enemy.update_enemy(self.screen)
 
         # Rendering Cursor.
         change_cursor_img(self.screen, CURSOR_IMG)
@@ -78,8 +73,6 @@ class GameManager:
         This method will handle all the computing/calculations stuff.
         '''
         self.player.update(self.tilemap.tiles_group, self.tilemap.spikes_group)
-        self.gun.rotate_gun_on_mouse_pos()
-        self.gun.update_bullet_status(self.tilemap.tiles_group)
 
     def run(self) -> None:
         '''

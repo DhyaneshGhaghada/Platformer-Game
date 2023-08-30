@@ -4,6 +4,7 @@ import random
 from .functions import collision_handler, key_handler, animate
 from .settings import *
 from .particle_system import Partical_System
+from .gun import Simple_Gun
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, player_img: pygame.Surface, x: int, y: int) -> None:
@@ -16,21 +17,22 @@ class Player(pygame.sprite.Sprite):
         self.dy = 0
         
         self.current_sprite = 0
-        self.mass = 1
         self.in_ground = False
         self.health = PLAYER_HEALTH
         self.damage = PLAYER_DAMAGE
         
         self.is_kill = False
         self.is_damage = False
-        self.is_kill = False # For the First Anime.
-        self.is_kill_2 = False # For the Second Anime.
+        self.is_kill = False # For the First Animation.
+        self.is_kill_2 = False # For the Second Animation.
 
         # damage particle system.
         self.damage_cooldown_timer = 2
         self.damage_cooldown_timer_copy = 2
         self.max_damage_particles = 10
         self.damage_particle_system = Partical_System(PLAYER_DAMAGE_PARTICLE_IMAGE)
+
+        self.gun = Simple_Gun(self)
 
     def movement(self, tiles: pygame.sprite.AbstractGroup) -> None:
         keys = key_handler()
@@ -116,6 +118,14 @@ class Player(pygame.sprite.Sprite):
         self.movement(tiles)
         self.spike_collision(spikes_group)
 
+        # Gun Stuff.
+        self.gun.rotate_gun(pygame.mouse.get_pos())
+        if pygame.mouse.get_pressed()[0] and self.gun.bullet_timer_copy <= 0:
+            self.gun.create_bullet(pygame.mouse.get_pressed())
+        self.gun.shoot_bullet()
+        self.gun.destroy_bullet(tiles)
+
     def draw(self, screen: pygame.Surface) -> None:
         screen.blit(self.image, (self.rect.x, self.rect.y))
         self.damage_particle_system.update_particles(screen)
+        self.gun.draw(screen)
