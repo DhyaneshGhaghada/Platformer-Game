@@ -9,6 +9,7 @@ from .tilemap import Tilemap
 from .functions import change_cursor_img
 from .background import Background
 from .enemies import FlyingEnemySystem
+from src.UI_Lib.textbox import Textbox
 
 # Initialising Pygame.
 pygame.init()
@@ -45,7 +46,9 @@ class GameManager:
                               tile_size=TILE_SIZE,
                               tiles=TILE_IMAGES)
 
-        self.flying_enemy = FlyingEnemySystem(self.player, self.tilemap.tiles_group)
+        self.flying_enemy = FlyingEnemySystem(self.player)
+
+        self.score = Textbox('vfx/fonts/Delicious_Handrawn/DeliciousHandrawn-Regular.ttf', 40)
 
 
     def rendering(self) -> None:
@@ -65,6 +68,9 @@ class GameManager:
         # Rendering and Updating Flying Enemies.
         self.flying_enemy.update_enemy(self.screen)
 
+        # Rendering Score.
+        self.score.draw_text(self.screen)
+
         # Rendering Cursor.
         change_cursor_img(self.screen, CURSOR_IMG)
 
@@ -73,6 +79,9 @@ class GameManager:
         This method will handle all the computing/calculations stuff.
         '''
         self.player.update(self.tilemap.tiles_group, self.tilemap.spikes_group)
+        self.player.enemy_damage(self.flying_enemy.flying_enemy_group)
+        self.score.clear_text()
+        self.score.create_text(f'Score - {self.player.score}', (255, 255, 255), (1000, 5))
 
     def run(self) -> None:
         '''

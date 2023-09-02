@@ -6,6 +6,8 @@ from .settings import *
 from .particle_system import Partical_System
 from .gun import Simple_Gun
 
+from src.UI_Lib.healthbar import HealthBar
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, player_img: pygame.Surface, x: int, y: int) -> None:
         pygame.sprite.Sprite.__init__(self)
@@ -19,20 +21,22 @@ class Player(pygame.sprite.Sprite):
         self.current_sprite = 0
         self.in_ground = False
         self.health = PLAYER_HEALTH
-        self.damage = PLAYER_DAMAGE
-        
+        self.score = 0 # Player's Score.
+
         self.is_kill = False
         self.is_damage = False
         self.is_kill = False # For the First Animation.
         self.is_kill_2 = False # For the Second Animation.
 
         # damage particle system.
-        self.damage_cooldown_timer = 2
-        self.damage_cooldown_timer_copy = 2
+        # self.damage_cooldown_timer = 2
+        # self.damage_cooldown_timer_copy = 2
         self.max_damage_particles = 10
         self.damage_particle_system = Partical_System(PLAYER_DAMAGE_PARTICLE_IMAGE)
 
         self.gun = Simple_Gun(self)
+        
+        self.health_bar = HealthBar(HEALTHBAR_IMAGE, (10, 10), self.health)
 
     def movement(self, tiles: pygame.sprite.AbstractGroup) -> None:
         keys = key_handler()
@@ -74,18 +78,17 @@ class Player(pygame.sprite.Sprite):
             if self.current_sprite >= len(PLAYER_ANIMATION['die_1'][0])-1:
                 self.is_kill_2 = True
         elif self.is_damage:
-            self.damage_cooldown_timer_copy -= 0.1
-            if self.damage_cooldown_timer_copy <= 0:
-                animate(self, PLAYER_ANIMATION['damage'][0], PLAYER_ANIMATION['damage'][1])
-                for _ in range(self.max_damage_particles):
-                    self.damage_particle_system.create_particles(x=self.rect.x + (self.rect.width/2),
-                                                                y=self.rect.y + self.rect.height,
-                                                                dx=round(random.uniform(-1,1), 2)*5,
-                                                                dy=-2,
-                                                                timer=random.randint(1, 10),
-                                                                gravity=0.2,
-                                                                timer_speed=0.1)
-                self.damage_cooldown_timer_copy = self.damage_cooldown_timer
+            animate(self, PLAYER_ANIMATION['damage'][0], PLAYER_ANIMATION['damage'][1])
+            self.health_bar.damage(damage_value=0.1)
+            self.health -= 0.1 # Health Declining by one.
+            for _ in range(self.max_damage_particles):
+                self.damage_particle_system.create_particles(x=self.rect.x + (self.rect.width/2),
+                                                            y=self.rect.y + self.rect.height,
+                                                            dx=round(random.uniform(-1,1), 2)*5,
+                                                            dy=-2,
+                                                            timer=random.randint(1, 10),
+                                                            gravity=0.2,
+                                                            timer_speed=0.1)
         else:
             if direction == 'X' and self.in_ground == True:
                 if self.dx > 0:
@@ -104,7 +107,6 @@ class Player(pygame.sprite.Sprite):
         self.is_damage = False
         for spike in spikes_group.sprites():
             if spike.rect.colliderect(self.rect):
-                self.health -= 0.1
                 self.is_damage = True
     
     def kill(self) -> None:
@@ -121,7 +123,7 @@ class Player(pygame.sprite.Sprite):
         # Gun Stuff.
         self.gun.rotate_gun(pygame.mouse.get_pos())
         if pygame.mouse.get_pressed()[0] and self.gun.bullet_timer_copy <= 0:
-            self.gun.create_bullet(pygame.mouse.get_pressed())
+            self.gun.create_bullet(pygame.mouse.get_pos())
         self.gun.shoot_bullet()
         self.gun.destroy_bullet(tiles)
 
@@ -129,3 +131,10 @@ class Player(pygame.sprite.Sprite):
         screen.blit(self.image, (self.rect.x, self.rect.y))
         self.damage_particle_system.update_particles(screen)
         self.gun.draw(screen)
+        self.health_bar.draw(screen)
+
+    def enemy_damage(self, enemy) -> None:
+        hits = self.gun.destroy_bullet(enemy)
+        if hits:
+            for bullet, enemy in hits.items():
+                enemy[0].is_damage = True

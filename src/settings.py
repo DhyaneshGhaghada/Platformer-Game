@@ -89,7 +89,7 @@ PLAYER_ANIMATION = {
     'run_left': [generate_pygame_image(dir='vfx/player/run', resize=(16*2, 16*2), is_reverse=(True, False)), 0.3],
     'jump_right': [generate_pygame_image(dir='vfx/player/jump', resize=(16*2, 16*2), is_reverse=(False, False)), 0.1],
     'jump_left': [generate_pygame_image(dir='vfx/player/jump', resize=(16*2, 16*2), is_reverse=(True, False)), 0.1],
-    'damage': [generate_pygame_image(dir='vfx/player/damage', resize=(16*2, 16*2), is_reverse=(False, False)), 0.1],
+    'damage': [generate_pygame_image(dir='vfx/player/damage', resize=(16*2, 16*2), is_reverse=(False, False)), 0.5],
     'die_1': [generate_pygame_image(dir='vfx/player/die_1', resize=(16*2, 16*2), is_reverse=(False, False)), 0.1],
     'die_2': [generate_pygame_image(dir='vfx/player/die_2', resize=(16*2, 16*2), is_reverse=(False, False)), 0.05],
 }
@@ -99,4 +99,8 @@ PLAYER_ANIMATION = {
 FLYING_ENEMY_ANIMATION = {
     'idle_right': [generate_pygame_image(dir='vfx/enemies/flying_enemy/idle', resize=(16*2, 16*2), is_reverse=(False, False)), 0.1],
     'idle_left': [generate_pygame_image(dir='vfx/enemies/flying_enemy/idle', resize=(16*2, 16*2), is_reverse=(True, False)), 0.1],
+    'damage_right': [generate_pygame_image(dir='vfx/enemies/flying_enemy/damage', resize=(16*2, 16*2), is_reverse=(False, False)), 0.1],
+    'damage_left': [generate_pygame_image(dir='vfx/enemies/flying_enemy/damage', resize=(16*2, 16*2), is_reverse=(True, False)), 0.1]
 }
+
+HEALTHBAR_IMAGE = pygame.transform.scale(pygame.image.load('vfx/libresprite_files/health_bar.png'), (96*2, 32*2))

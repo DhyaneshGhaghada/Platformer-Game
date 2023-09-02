@@ -29,7 +29,8 @@ class Simple_Gun(pygame.sprite.Sprite):
         
         # Partical System.
         self.is_particle_system = False
-        self.particle_system = Partical_System(SIMPLE_GUN_PARTICLE_IMAGE)
+        self.particle_image = SIMPLE_GUN_PARTICLE_IMAGE
+        self.particle_system = Partical_System(self.particle_image)
 
     def rotate_gun(self, coords) -> None:
         x, y = (self.obj.rect.x + (self.obj.rect.width/2), self.obj.rect.y + (self.obj.rect.height/2))
@@ -51,7 +52,7 @@ class Simple_Gun(pygame.sprite.Sprite):
         bullet.rect.x = self.rotated_rect.x
         bullet.rect.y = self.rotated_rect.y
       
-        angle = compute_angle(coords, (bullet.rect.x, bullet.rect.y))
+        angle = compute_angle(coords, (bullet.rect.x+bullet.rect.width/2, bullet.rect.y+bullet.rect.height/2))
         x = math.cos(angle*(math.pi/180))*(180/math.pi)
         y = math.sin(angle*(math.pi/180))*(180/math.pi)
         bullet.x_vel = -x # IDK why putting '-' sign works here!
@@ -88,6 +89,7 @@ class Simple_Gun(pygame.sprite.Sprite):
                                                     random.randint(1, 10),
                                                     SIMPLE_GUN_PARTICLE_GRAVITY,
                                                     SIMPLE_GUN_PARTICLE_TIMERSPEED)
+        return hits
 
     def draw(self, screen: pygame.Surface) -> None:
         self.bullet_group.draw(screen)
