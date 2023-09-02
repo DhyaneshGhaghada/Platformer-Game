@@ -34,8 +34,6 @@ class FlyingEnemy(pygame.sprite.Sprite):
         self.max_damage_particles = 10
         self.max_die_particles = 50
 
-
-
     def update(self, screen: pygame.Surface) -> None:
         direction_x = (self.player.rect.x - self.rect.x)
         if self.is_damage:
