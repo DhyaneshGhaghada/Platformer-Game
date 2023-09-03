@@ -29,8 +29,6 @@ class Player(pygame.sprite.Sprite):
         self.is_kill_2 = False # For the Second Animation.
 
         # damage particle system.
-        # self.damage_cooldown_timer = 2
-        # self.damage_cooldown_timer_copy = 2
         self.max_damage_particles = 10
         self.damage_particle_system = Partical_System(PLAYER_DAMAGE_PARTICLE_IMAGE)
 
@@ -112,6 +110,11 @@ class Player(pygame.sprite.Sprite):
     def kill(self) -> None:
         if self.health <= 0:
             self.is_kill = True
+
+    def gain_health(self, gain_value) -> None:
+        if self.health + gain_value <= PLAYER_HEALTH:
+            self.health += gain_value
+            self.health_bar.gain(gain_value=gain_value)
 
     def update(self,
                tiles: pygame.sprite.AbstractGroup,

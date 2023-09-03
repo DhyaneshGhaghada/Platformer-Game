@@ -1,6 +1,7 @@
 # Importing Libraries.
 import pygame
 from pygame.locals import *
+import random
 
 # Importing Local Modules.
 from .settings import *
@@ -21,7 +22,9 @@ class GameManager:
         self.height = HEIGHT
 
         # Setting up Screen.
-        self.screen = pygame.display.set_mode((self.width, self.height))
+        self.window = pygame.display.set_mode((self.width, self.height))
+        self.screen = pygame.Surface(self.window.get_size())  #pygame.display.set_mode((self.width, self.height))
+        self.screen_rect = self.screen.get_rect()
         pygame.display.set_icon(PLAYER_ANIMATION['idle'][0][0])
 
         # Setting up clock for FPS.
@@ -46,16 +49,20 @@ class GameManager:
                               tile_size=TILE_SIZE,
                               tiles=TILE_IMAGES)
 
-        self.flying_enemy = FlyingEnemySystem(self.player)
+        self.flying_enemy = FlyingEnemySystem(self.player, self)
 
         self.score = Textbox('vfx/fonts/Delicious_Handrawn/DeliciousHandrawn-Regular.ttf', 40)
+
+        self.is_screenshake = False
+        self.screenshake_timer = 5
+        self.screenshake_intensity = 2
 
 
     def rendering(self) -> None:
         '''
         This method will handle all the rendering stuff.
         '''
-
+        
         # Rendering Background.
         self.background.update_particles(self.screen)
         
@@ -80,8 +87,19 @@ class GameManager:
         '''
         self.player.update(self.tilemap.tiles_group, self.tilemap.spikes_group)
         self.player.enemy_damage(self.flying_enemy.flying_enemy_group)
+
         self.score.clear_text()
         self.score.create_text(f'Score - {self.player.score}', (255, 255, 255), (1000, 5))
+
+        # Screen shake when enemy dies.
+        if self.is_screenshake:
+            self.screenshake_timer -= 0.1
+            self.screen_rect.x += random.uniform(-1, 1)*self.screenshake_intensity
+            self.screen_rect.y += random.uniform(-1, 1)*self.screenshake_intensity
+            if self.screenshake_timer <= 0:
+                self.is_screenshake = False
+                self.screenshake_timer = 5
+                self.screen_rect.x, self.screen_rect.y = 0, 0
 
     def run(self) -> None:
         '''
@@ -90,6 +108,8 @@ class GameManager:
         running = True
         while running:
             # Filling screen with background color and displaying FPS.
+            self.window.fill(BACKGROUND_COLOR)
+            self.window.blit(self.screen, self.screen_rect)
             self.screen.fill(BACKGROUND_COLOR)
 
             self.computing()

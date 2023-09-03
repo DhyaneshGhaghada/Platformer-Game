@@ -75,7 +75,9 @@ class FlyingEnemy(pygame.sprite.Sprite):
 
 
 class FlyingEnemySystem:
-    def __init__(self, player) -> None:
+    def __init__(self, player, game_manager) -> None:
+        self.game_manager = game_manager
+        
         self.flying_enemy_group = pygame.sprite.Group()
         self.no_of_enemies = 5
         self.player = player
@@ -97,6 +99,7 @@ class FlyingEnemySystem:
     def kill_enemy(self, screen:pygame.Surface):
         for enemy in self.flying_enemy_group.sprites():
             if enemy.is_die == True:
+                self.game_manager.is_screenshake = True
                 for _ in range(self.death_particles_max):
                     self.death_particles.create_particles(x=enemy.rect.x + (enemy.rect.width/2),
                                                                 y=enemy.rect.y + enemy.rect.height,
@@ -106,12 +109,14 @@ class FlyingEnemySystem:
                                                                 gravity=0.2,
                                                                 timer_speed=0.1)
                 enemy.kill()
+                self.player.gain_health(gain_value=1)
                 self.player.score += 1
 
         self.death_particles.update_particles(screen)
 
     def update_enemy(self, screen: pygame.Surface) -> None:
         self.kill_enemy(screen)
+
         if len(self.flying_enemy_group) <= self.no_of_enemies-1:
             self.create_enemy()
 
