@@ -32,6 +32,11 @@ class Simple_Gun(pygame.sprite.Sprite):
         self.particle_image = SIMPLE_GUN_PARTICLE_IMAGE
         self.particle_system = Partical_System(self.particle_image)
 
+        # SFX
+        self.sfx = [pygame.mixer.Sound(f'sfx/gun_shoot/Fire {i+1}.mp3') for i in range(6)]
+        for i in range(len(self.sfx)):
+            self.sfx[i].set_volume(0.1)
+
     def rotate_gun(self, coords) -> None:
         x, y = (self.obj.rect.x + (self.obj.rect.width/2), self.obj.rect.y + (self.obj.rect.height/2))
         self.angle = compute_angle(((self.obj.rect.x, self.obj.rect.y)), coords)
@@ -43,6 +48,8 @@ class Simple_Gun(pygame.sprite.Sprite):
             self.rotated_image, self.rotated_rect = rotate(self.image, self.angle, (x, y))
 
     def create_bullet(self, coords) -> None:
+        self.sfx[random.randint(0, 5)].play()
+
         self.bullet_timer_copy = self.bullet_timer
         bullet = Bullet(self.bullet_img)
         
@@ -79,7 +86,7 @@ class Simple_Gun(pygame.sprite.Sprite):
                                                         SIMPLE_GUN_PARTICLE_GRAVITY,
                                                         SIMPLE_GUN_PARTICLE_TIMERSPEED)
         else:
-            hits = pygame.sprite.spritecollide(tile_group, self.bullet_group, True, False)
+            hits = pygame.sprite.spritecollide(tile_group, self.bullet_group, True)
             for bullet in hits:
                 self.is_particle_system = True
                 self.particle_system.create_particles(bullet.rect.x,

@@ -15,6 +15,9 @@ from src.UI_Lib.textbox import Textbox
 # Initialising Pygame.
 pygame.init()
 
+# Initialsing Pygame For Music.
+pygame.mixer.init()
+
 class GameManager:
     def __init__(self):
         # width and height for the screen.
@@ -57,6 +60,10 @@ class GameManager:
         self.screenshake_timer = 5
         self.screenshake_intensity = 2
 
+        pygame.mixer.music.load('sfx/main_music.mp3')
+        pygame.mixer.music.set_volume(0.5)
+        pygame.mixer.music.play(loops=-1)
+
 
     def rendering(self) -> None:
         '''
@@ -94,12 +101,12 @@ class GameManager:
         # Screen shake when enemy dies.
         if self.is_screenshake:
             self.screenshake_timer -= 0.1
+            self.screen_rect.x, self.screen_rect.y = 0, 0
             self.screen_rect.x += random.uniform(-1, 1)*self.screenshake_intensity
             self.screen_rect.y += random.uniform(-1, 1)*self.screenshake_intensity
             if self.screenshake_timer <= 0:
                 self.is_screenshake = False
                 self.screenshake_timer = 5
-                self.screen_rect.x, self.screen_rect.y = 0, 0
 
     def run(self) -> None:
         '''

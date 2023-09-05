@@ -34,7 +34,14 @@ class FlyingEnemy(pygame.sprite.Sprite):
         self.max_damage_particles = 10
         self.max_die_particles = 50
 
-    def update(self, screen: pygame.Surface) -> None:
+        # Enemy Spawn.
+        self.spawn = True
+        self.circle_radius = 0
+        self.max_circle_radius = 50
+        self.is_max_circle = False
+        self.circle_width = 5
+
+    def animation(self) -> None:
         direction_x = (self.player.rect.x - self.rect.x)
         if self.is_damage:
             self.health -= 1
@@ -57,6 +64,22 @@ class FlyingEnemy(pygame.sprite.Sprite):
                 animate(self, FLYING_ENEMY_ANIMATION['idle_right'][0], FLYING_ENEMY_ANIMATION['idle_right'][1])
             elif direction_x < 0:
                 animate(self, FLYING_ENEMY_ANIMATION['idle_left'][0], FLYING_ENEMY_ANIMATION['idle_left'][1])
+
+    def update(self, screen: pygame.Surface) -> None:
+        # Enemy Spawn.
+        if self.spawn:
+            pygame.draw.circle(screen, (255, 255, 255), (self.rect.centerx, self.rect.centery), self.circle_radius, self.circle_width)
+            if self.circle_radius <= self.max_circle_radius and self.is_max_circle == False:
+                self.circle_radius += 1
+            else:
+                self.is_max_circle = True
+            if self.is_max_circle:
+                self.circle_radius -= 2
+            if self.circle_radius < 0:
+                self.is_max_circle = False
+                self.spawn = False
+
+        self.animation()
 
         self.rect.x += -self.dx*self.movement_speed
         self.rect.y += self.dy*self.movement_speed
@@ -86,6 +109,7 @@ class FlyingEnemySystem:
         self.death_particles_max = 50
     
     def create_enemy(self):
+        SFX['spawn'].play()
         enemy = FlyingEnemy(self.player)
         enemy.target_x = random.randint(0, WIDTH)
         enemy.target_y = random.randint(0, HEIGHT)
@@ -99,6 +123,7 @@ class FlyingEnemySystem:
     def kill_enemy(self, screen:pygame.Surface):
         for enemy in self.flying_enemy_group.sprites():
             if enemy.is_die == True:
+                SFX['blast'].play()
                 self.game_manager.is_screenshake = True
                 for _ in range(self.death_particles_max):
                     self.death_particles.create_particles(x=enemy.rect.x + (enemy.rect.width/2),

@@ -54,6 +54,7 @@ class Player(pygame.sprite.Sprite):
         if self.is_kill != True:
             # Vertical Movement.
             if keys['UP'] and self.in_ground == True:
+                SFX['jump'].play()
                 self.dy = PLAYER_JUMP_FORCE
                 self.in_ground = False
             self.dy += GRAVITY
@@ -73,6 +74,7 @@ class Player(pygame.sprite.Sprite):
             animate(self, PLAYER_ANIMATION['die_2'][0], PLAYER_ANIMATION['die_2'][1])
         elif self.is_kill:
             animate(self, PLAYER_ANIMATION['die_1'][0], PLAYER_ANIMATION['die_1'][1])
+            SFX['death'].play()
             if self.current_sprite >= len(PLAYER_ANIMATION['die_1'][0])-1:
                 self.is_kill_2 = True
         elif self.is_damage:

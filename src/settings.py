@@ -2,6 +2,8 @@ import pygame
 
 from .functions import generate_pygame_image
 
+# Initializing pygame music.
+pygame.mixer.init()
 
 # Screen width and height.
 WIDTH = 1184
@@ -91,6 +93,21 @@ PLAYER_ANIMATION = {
     'die_1': [generate_pygame_image(dir='vfx/player/die_1', resize=(16*2, 16*2), is_reverse=(False, False)), 0.1],
     'die_2': [generate_pygame_image(dir='vfx/player/die_2', resize=(16*2, 16*2), is_reverse=(False, False)), 0.05],
 }
+
+SFX = {
+    'death': pygame.mixer.Sound('sfx/death.mp3'),
+    'jump': pygame.mixer.Sound('sfx/jump.mp3'),
+    'damage': pygame.mixer.Sound('sfx/damage.mp3'),
+    'blast': pygame.mixer.Sound('sfx/blast.wav'),
+    'spawn': pygame.mixer.Sound('sfx/spawn.mp3')
+}
+
+SFX['death'].set_volume(0.7)
+SFX['jump'].set_volume(0.4)
+SFX['damage'].set_volume(0.4)
+SFX['blast'].set_volume(0.9)
+SFX['spawn'].set_volume(0.2)
+
 
 # FLYING ENEMY.
 # FLYING ENEMY ANIMATION.
