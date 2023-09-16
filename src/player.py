@@ -4,7 +4,8 @@ import random
 from .functions import collision_handler, key_handler, animate
 from .settings import *
 from .particle_system import Partical_System
-from .gun import Simple_Gun
+from .weapons.gun import Simple_Gun
+from .weapons.sword import Sword
 
 from src.UI_Lib.healthbar import HealthBar
 
@@ -32,7 +33,12 @@ class Player(pygame.sprite.Sprite):
         self.max_damage_particles = 10
         self.damage_particle_system = Partical_System(PLAYER_DAMAGE_PARTICLE_IMAGE)
 
-        self.gun = Simple_Gun(self)
+        # Weapons.
+        self.weapons = {
+            'gun': Simple_Gun(self),
+            'sword': Sword(self)
+        }
+        self.current_weapon = 'gun'
         
         self.health_bar = HealthBar(HEALTHBAR_IMAGE, (10, 10), self.health)
 
@@ -117,6 +123,13 @@ class Player(pygame.sprite.Sprite):
         if self.health + gain_value <= PLAYER_HEALTH:
             self.health += gain_value
             self.health_bar.gain(gain_value=gain_value)
+    
+    def choose_gun(self) -> None:
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_1]:
+            self.current_weapon = 'gun'
+        if keys[pygame.K_2]:
+            self.current_weapon = 'sword'
 
     def update(self,
                tiles: pygame.sprite.AbstractGroup,
@@ -124,22 +137,30 @@ class Player(pygame.sprite.Sprite):
         self.kill()
         self.movement(tiles)
         self.spike_collision(spikes_group)
+        self.choose_gun()
 
         # Gun Stuff.
-        self.gun.rotate_gun(pygame.mouse.get_pos())
-        if pygame.mouse.get_pressed()[0] and self.gun.bullet_timer_copy <= 0:
-            self.gun.create_bullet(pygame.mouse.get_pos())
-        self.gun.shoot_bullet()
-        self.gun.destroy_bullet(tiles)
+        if self.current_weapon == 'gun':
+            self.weapons['gun'].rotate_gun(pygame.mouse.get_pos())
+            if pygame.mouse.get_pressed()[0] and self.weapons['gun'].bullet_timer_copy <= 0:
+                self.weapons['gun'].create_bullet(pygame.mouse.get_pos())
+            self.weapons['gun'].shoot_bullet()
+            self.weapons['gun'].destroy_bullet(tiles)
+        
+        # Weapon Stuff.
+        if self.current_weapon == 'sword':
+            self.weapons['sword'].update()
 
     def draw(self, screen: pygame.Surface) -> None:
         screen.blit(self.image, (self.rect.x, self.rect.y))
         self.damage_particle_system.update_particles(screen)
-        self.gun.draw(screen)
+        if self.current_weapon == 'gun': self.weapons['gun'].draw(screen)
+        if self.current_weapon == 'sword': self.weapons['sword'].draw(screen)
         self.health_bar.draw(screen)
 
     def enemy_damage(self, enemy) -> None:
-        hits = self.gun.destroy_bullet(enemy)
-        if hits:
-            for bullet, enemy in hits.items():
-                enemy[0].is_damage = True
+        if self.current_weapon == 'gun':
+            hits = self.weapons['gun'].destroy_bullet(enemy)
+            if hits:
+                for bullet, enemy in hits.items():
+                    enemy[0].is_damage = True

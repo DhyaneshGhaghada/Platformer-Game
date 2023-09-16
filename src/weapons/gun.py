@@ -3,10 +3,10 @@ import math
 import random
 from copy import deepcopy
 
-from .functions import compute_angle, rotate
-from .bullet import Bullet
-from .particle_system import Partical_System
-from .settings import *
+from ..functions import compute_angle, rotate
+from ..bullet import Bullet
+from ..particle_system import Partical_System
+from ..settings import *
 
 class Simple_Gun(pygame.sprite.Sprite):
     '''
@@ -73,6 +73,7 @@ class Simple_Gun(pygame.sprite.Sprite):
         self.bullet_timer_copy -= 0.1
     
     def destroy_bullet(self, tile_group) -> None:
+        # If the tile_group parameter is group or a single sprite.
         if isinstance(tile_group, pygame.sprite.Group):
             hits = pygame.sprite.groupcollide(self.bullet_group, tile_group, True, False)
             if hits:

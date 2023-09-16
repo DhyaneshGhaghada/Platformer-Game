@@ -9,8 +9,8 @@ from .player import Player
 from .tilemap import Tilemap
 from .functions import change_cursor_img
 from .background import Background
-from .enemies import FlyingEnemySystem
-from src.UI_Lib.textbox import Textbox
+from .enemies.flying_enemy import FlyingEnemySystem
+from .UI_Lib.textbox import Textbox
 
 # Initialising Pygame.
 pygame.init()
@@ -26,7 +26,7 @@ class GameManager:
 
         # Setting up Screen.
         self.window = pygame.display.set_mode((self.width, self.height))
-        self.screen = pygame.Surface(self.window.get_size())  #pygame.display.set_mode((self.width, self.height))
+        self.screen = pygame.Surface(self.window.get_size())
         self.screen_rect = self.screen.get_rect()
         pygame.display.set_icon(PLAYER_ANIMATION['idle'][0][0])
 

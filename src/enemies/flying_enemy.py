@@ -2,10 +2,10 @@ import pygame
 import random
 import math
 
-from .settings import *
-from .functions import animate, compute_angle
-from .gun import Simple_Gun
-from .particle_system import Partical_System
+from ..settings import *
+from ..functions import animate, compute_angle
+from ..weapons.gun import Simple_Gun
+from ..particle_system import Partical_System
 
 class FlyingEnemy(pygame.sprite.Sprite):
     def __init__(self, player) -> None:
@@ -111,6 +111,10 @@ class FlyingEnemySystem:
     def create_enemy(self):
         SFX['spawn'].play()
         enemy = FlyingEnemy(self.player)
+        
+        enemy.rect.x = random.randint(0, WIDTH)
+        enemy.rect.y = random.randint(0, HEIGHT)
+        
         enemy.target_x = random.randint(0, WIDTH)
         enemy.target_y = random.randint(0, HEIGHT)
 
@@ -127,12 +131,12 @@ class FlyingEnemySystem:
                 self.game_manager.is_screenshake = True
                 for _ in range(self.death_particles_max):
                     self.death_particles.create_particles(x=enemy.rect.x + (enemy.rect.width/2),
-                                                                y=enemy.rect.y + enemy.rect.height,
-                                                                dx=round(random.uniform(-1,1), 2)*10,
-                                                                dy=-round(random.uniform(-1,1), 2)*10,
-                                                                timer=random.randint(1, 10),
-                                                                gravity=0.2,
-                                                                timer_speed=0.1)
+                                                          y=enemy.rect.y + enemy.rect.height,
+                                                          dx=round(random.uniform(-1,1), 2)*10,
+                                                          dy=-round(random.uniform(-1,1), 2)*10,
+                                                          timer=random.randint(1, 10),
+                                                          gravity=0.2,
+                                                          timer_speed=0.1)
                 enemy.kill()
                 self.player.gain_health(gain_value=1)
                 self.player.score += 1
