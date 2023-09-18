@@ -65,7 +65,7 @@ SIMPLE_GUN_PARTICLE_TIMERSPEED = 0.2
 SIMPLE_GUN_PARTICLE_MAX = 2
 
 # Sword Images.
-SWORD_IMAGE = pygame.transform.scale(pygame.image.load('vfx/weapons/sword.png'), (30*2, 5*2))
+SWORD_IMAGE = pygame.transform.scale(pygame.image.load('vfx/weapons/sword.png'), (30*2.5, 5*2.5))
 
 # Spikes.
 SPIKE_IMAGE = pygame.transform.scale(pygame.image.load('vfx/libresprite_files/spikes.png'), (16*2, 5*2))

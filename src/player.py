@@ -124,7 +124,7 @@ class Player(pygame.sprite.Sprite):
             self.health += gain_value
             self.health_bar.gain(gain_value=gain_value)
     
-    def choose_gun(self) -> None:
+    def choose_weapon(self) -> None:
         keys = pygame.key.get_pressed()
         if keys[pygame.K_1]:
             self.current_weapon = 'gun'
@@ -137,7 +137,7 @@ class Player(pygame.sprite.Sprite):
         self.kill()
         self.movement(tiles)
         self.spike_collision(spikes_group)
-        self.choose_gun()
+        self.choose_weapon()
 
         # Gun Stuff.
         if self.current_weapon == 'gun':
@@ -147,9 +147,11 @@ class Player(pygame.sprite.Sprite):
             self.weapons['gun'].shoot_bullet()
             self.weapons['gun'].destroy_bullet(tiles)
         
-        # Weapon Stuff.
+        # Sword Stuff.
         if self.current_weapon == 'sword':
             self.weapons['sword'].update()
+            if pygame.mouse.get_pressed()[0]:
+                self.weapons['sword'].slash()
 
     def draw(self, screen: pygame.Surface) -> None:
         screen.blit(self.image, (self.rect.x, self.rect.y))
@@ -164,3 +166,8 @@ class Player(pygame.sprite.Sprite):
             if hits:
                 for bullet, enemy in hits.items():
                     enemy[0].is_damage = True
+        if self.current_weapon == 'sword':
+            if self.weapons['sword'].is_slash == True:
+                hits = pygame.sprite.spritecollide(self.weapons['sword'], enemy, False)
+                for enemy in hits:
+                    enemy.is_damage = True
